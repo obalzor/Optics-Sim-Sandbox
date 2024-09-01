@@ -26,12 +26,12 @@ if __name__ == "__main__":
     wavelength = 600e-3
     wavenumber = 2.0 * np.pi / wavelength
     waist_radius = 100e-6
-    radial_order = 1
-    azimuthal_order = 0
+    radial_order = 0
+    azimuthal_order = 2
 
     # sampling parameters
     n = 201
-    frame = 10 * waist_radius
+    frame = 20 * waist_radius
 
     window_x = 2.0 * (frame + waist_radius)
     x_min = -window_x / 2.0
@@ -73,10 +73,52 @@ if __name__ == "__main__":
     zR_factor = 10.0
     z_min = -zR_factor * rayleigh
     z_max = zR_factor * rayleigh
-    nz = 51
+    nz = 101
     z = np.linspace(z_min, z_max, nz)
+    
+    prop_amplitude = []
+    prop_phase = []
+    prop_real = []
+    
+    for iz in range (0, nz):
+        field = sources.laguerre_gauss(x, y, z[iz], wavelength, waist_radius, radial_order, azimuthal_order)
+        prop_amplitude.append(np.abs(field))
+        prop_phase.append(np.angle(field))
+        prop_real.append(np.real(field))
+        
+    fig, (ax1, ax2) = plt.subplots(2, 1, sharex = True, sharey = True, figsize = (10, 20))
+    im1 = ax1.imshow(prop_amplitude[0], extent = (x_min, x_max, x_min, x_max), cmap = cmap_amplitude, animated = True)
+    im2 = ax2.imshow(prop_phase[0], extent = (x_min, x_max, x_min, x_max), vmin = -np.pi, vmax= np.pi, cmap = cmap_phase, animated = True)
+    
+    cbar_amplitude = fig.colorbar(im1, ax = ax1)
+    cbar_amplitude.set_label('Amplitude of Electric Field [a.u.]')
+    cbar_phase = fig.colorbar(im2, ax = ax2)
+    cbar_phase.set_label('Phase [rad]')
+    
+    ax1.set_title('Amplitude of Laguerre-Gauss ' + str(radial_order) + ', ' + str(azimuthal_order))
+    ax2.set_title('Phase of Laguerre-Gauss ' + str(radial_order) + ', ' + str(azimuthal_order))
+    ax1.set_xlabel('$x$ [m]')
+    ax2.set_xlabel('$x$ [m]')
+    ax1.set_ylabel('$y$ [m]')
+    ax2.set_ylabel('$y$ [m]')
+    plt.ticklabel_format(axis = 'x', style = 'scientific', scilimits = (0,0))
+    plt.ticklabel_format(axis = 'y', style = 'scientific', scilimits = (0,0))
+    plt.tight_layout()
+    plt.show()
+    
+    
+    
+    def update_frame(i):
+        im1.set_array(prop_amplitude[i])
+        im2.set_array(prop_phase[i])
+        return im1, im2
+    
+    animation_amplitude_phase = animation.FuncAnimation(fig, update_frame, frames = nz, interval = 50, blit = True)
+    animation_amplitude_phase.save('results\\Animation ' + str(radial_order) + ', ' + str(azimuthal_order) + '.gif', writer = 'imagemagick')
+    
+    
 
-
+    
 
 
 
