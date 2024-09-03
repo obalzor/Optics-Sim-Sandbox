@@ -24,15 +24,15 @@ if __name__ == "__main__":
     wavelength = 640e-9
     wavenumber = 2.0 * np.pi / wavelength
     waist_radius = 100e-6
-    radial_order = 0
-    azimuthal_order = 0
+    radial_order = 2
+    azimuthal_order = 2
     
     rayleigh = sources.laguerre_gauss_paraxial_parameters(wavelength, waist_radius, radial_order, azimuthal_order, 0.0)[1]
     
     print('Rayleigh length of beam:', rayleigh*1e3, 'mm')
     
     # sampling parameters
-    frame = 10.0 * waist_radius
+    frame = 2.0 * waist_radius
     n = 201
     
     window_x = 2.0 * (frame + waist_radius)
