@@ -26,7 +26,7 @@ if __name__ == "__main__":
     wavelength = 600e-3
     wavenumber = 2.0 * np.pi / wavelength
     waist_radius = 100e-6
-    radial_order = 0
+    radial_order = 1
     azimuthal_order = 1
 
     # sampling parameters
