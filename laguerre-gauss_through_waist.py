@@ -27,7 +27,7 @@ if __name__ == "__main__":
     wavenumber = 2.0 * np.pi / wavelength
     waist_radius = 100e-6
     radial_order = 0
-    azimuthal_order = 2
+    azimuthal_order = 1
 
     # sampling parameters
     n = 201
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     cbar_phase = fig.colorbar(im2, ax = ax2)
     cbar_phase.set_label('Phase [rad]')
     
-    ax1.set_title('Amplitude of Laguerre-Gauss ' + str(radial_order) + ', ' + str(azimuthal_order))
+    ax1.set_title('Real Part of Laguerre-Gauss ' + str(radial_order) + ', ' + str(azimuthal_order))
     ax2.set_title('Phase of Laguerre-Gauss ' + str(radial_order) + ', ' + str(azimuthal_order))
     ax1.set_xlabel('$x$ [m]')
     ax2.set_xlabel('$x$ [m]')
@@ -109,12 +109,12 @@ if __name__ == "__main__":
     
     
     def update_frame(i):
-        im1.set_array(prop_amplitude[i])
+        im1.set_array(prop_real[i])
         im2.set_array(prop_phase[i])
         return im1, im2
     
     animation_amplitude_phase = animation.FuncAnimation(fig, update_frame, frames = nz, interval = 50, blit = True)
-    animation_amplitude_phase.save('results\\Animation ' + str(radial_order) + ', ' + str(azimuthal_order) + '.gif', writer = 'imagemagick')
+    animation_amplitude_phase.save('results\\Animation RePa ' + str(radial_order) + ', ' + str(azimuthal_order) + '.gif', writer = 'imagemagick')
     
     
 
