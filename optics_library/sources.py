@@ -91,7 +91,7 @@ def laguerre_gauss(x, y, z, wavelength = 600e-9, waist_radius = 100e-6, radial_o
             term5 = np.exp(-1j * wavenumber * rho**2 / (2 * R))
             term6 = np.exp(-1j * azimuthal_order * phi)
             term7 = np.exp(1j * (np.abs(azimuthal_order) + 2 * radial_order + 1) * np.arctan(z/zR))
-            lg_beam[ix, iy] = term1 * term2 * term3 * term4 * term5 * term6# * term7
+            lg_beam[ix, iy] = term1 * term2 * term3 * term4 * term5 * term6 * term7
     lg_beam /= np.max(np.abs(lg_beam))
     return lg_beam
 

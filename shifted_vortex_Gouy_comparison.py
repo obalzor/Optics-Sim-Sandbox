@@ -125,7 +125,7 @@ if __name__ == "__main__":
     shifted_vortex = []
     
     for iz in range (0, nz): 
-        shifted_vortex.append(sources.laguerre_gauss(x, y, z[iz], wavelength, waist_radius, radial_order, azimuthal_order) + sources.laguerre_gauss(x, y, z[iz], wavelength, waist_radius, 0, 0))
+        shifted_vortex.append(sources.laguerre_gauss(x, y, z[iz], wavelength, 2.0*waist_radius, radial_order, azimuthal_order) + sources.laguerre_gauss(x, y, z[iz], wavelength, waist_radius, 0, 0))
         
     # set up figure for animation
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, sharex = True, sharey = True, figsize = (10, 10))
@@ -167,7 +167,8 @@ if __name__ == "__main__":
         return cax_amplitude, cax_phase, cax_real, cax_imaginary
     
     animation_shifted_vortex = animation.FuncAnimation(fig, update_frame, frames = nz, interval = 50, blit = True)
-    animation_shifted_vortex.save('results\\animation_shifted_vortex_withoutGouy.gif', writer = 'imagemagick')
+    animation_shifted_vortex.save('results\\animation_shifted_vortex_3.gif', writer = 'imagemagick')
+    
     
     
     
